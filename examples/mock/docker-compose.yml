@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mockoon:
+    image: mockoon/cli:latest
+    command: mockoon-cli start  --data data # this is where the change takes place
+    container_name: myapi
+    ports:
+      - "3000:3000"
+    networks:
+      demo:
+    volumes:
+      - type: bind
+        source: ../../api/Scheduler_OpenAPI_17042023_V3.json    
+        target: /data 
+  pytest:
+   build:
+     context: ../../test/.
+   container_name: pytest
+   tty: true
+   stdin_open: true
+   networks:
+      demo:
+
+
+networks:
+      demo:
+ 
