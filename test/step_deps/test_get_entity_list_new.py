@@ -30,9 +30,9 @@ def smoke_get_request(requestor_id, requestor_role, entity_id):
     return response
     #assert find_free_subscribers_response_code.status_code == code
 
-@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an entity_id "{entity_id}"'), target_fixture = 'unit_get_request')
-def unit_get_request(requestor_id, requestor_role, entity_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'entity_id': entity_id}
+@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an entity_id "{entity_id}" with details filter for "{filter_entity_id}" and requesting for entity details for "{required_category}" "{required_entity_id}" "{required_name}" and "{required_email}"'), target_fixture = 'unit_get_request')
+def unit_get_request(requestor_id, requestor_role, entity_id, filter_entity_id, required_category, required_entity_id, required_name, required_email):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'entity_id': entity_id, 'entity_filter[entity_id]': filter_entity_id, 'entity_details_required[category]': required_category,'entity_details_required[entity_id]': required_entity_id,'entity_details_required[name]': required_name,'entity_details_required[emai]': required_email}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
@@ -40,9 +40,9 @@ def unit_get_request(requestor_id, requestor_role, entity_id):
     return response
 
 
-@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an entity_id "{entity_id}"'), target_fixture = 'neg_get_request')
-def neg_get_request(requestor_id,requestor_role,entity_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'entity_id': entity_id}
+@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an entity_id "{entity_id}" with details filter for "{filter_entity_id}" and requesting for entity details for "{required_category}" "{required_entity_id}" "{required_name}" and "{required_email}"'), target_fixture = 'neg_get_request')
+def neg_get_request(requestor_id, requestor_role, entity_id, filter_entity_id, required_category, required_entity_id, required_name, required_email):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'entity_id': entity_id, 'entity_filter[entity_id]': filter_entity_id, 'entity_details_required[category]': required_category,'entity_details_required[entity_id]': required_entity_id,'entity_details_required[name]': required_name,'entity_details_required[emai]': required_email}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
