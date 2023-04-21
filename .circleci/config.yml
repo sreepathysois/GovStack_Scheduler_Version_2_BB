@@ -25,8 +25,11 @@ jobs:
           name: Check Status of Testing Containers are Deployed 
           command: docker ps
       - run:
-          name: Create Test Result Directory
-          command: mkdir -p /home/circleci/test_result
+          name: Testing Scheduler BB API 
+          command: 'echo testing using conatainers' 
+      - run:
+          name: Check Status of Testing Containers are Deployed 
+          command: docker ps
       - run:
           name: Run cucumber tests against Register BB Mock 
           command: docker  exec -i pytest  pytest  -s --json-report --json-report-indent=4 --json-report-file=/home/circleci/test_result/smoke_testing_report.json
