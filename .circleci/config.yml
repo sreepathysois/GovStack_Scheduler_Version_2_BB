@@ -29,7 +29,7 @@ jobs:
           command: mkdir -p /home/circleci/test_result
       - run:
           name: Run cucumber tests against Register BB Mock 
-          command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/home/circleci/test_result/smoke_testing_report.json
+          command: docker  exec -i pytest  pytest  -s --json-report --json-report-indent=4 --json-report-file=/home/circleci/test_result/smoke_testing_report.json
                 
       - store_test_results:  
           path: ../test_result
