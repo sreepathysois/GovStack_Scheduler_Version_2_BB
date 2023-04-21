@@ -19,7 +19,7 @@ scenarios('../features/getalertschedulelistnew.feature')
 @pytest.fixture
 
 
-#@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert_schedule_id "{alert_schedule_id}" for smoke testing'), target_fixture = 'smoke_get_request')
+#@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an event_id "{event_id}" for smoke testing'), target_fixture = 'smoke_get_request')
 @given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert_schedule_id "{alert_schedule_id}" for smoke testing'),target_fixture = 'smoke_get_request')
 def smoke_get_request(requestor_id, requestor_role, alert_schedule_id):
     params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'alert_schedule_id': alert_schedule_id}
@@ -30,9 +30,9 @@ def smoke_get_request(requestor_id, requestor_role, alert_schedule_id):
     return response
     #assert find_free_subscribers_response_code.status_code == code
 
-@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert_schedule_id "{alert_schedule_id}"'), target_fixture = 'unit_get_request')
-def unit_get_request(requestor_id, requestor_role, alert_schedule_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'alert_schedule_id': alert_schedule_id}
+@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert schedule list  with details filter for "{filter_alert_schedule_id}" and requesting for alert schedule details for "{required_target_category}" "{required_entity_id}" "{required_alert_schedule_id}" and "{required_message_id}"'), target_fixture = 'unit_get_request')
+def unit_get_request(requestor_id, requestor_role,filter_alert_schedule_id, required_target_category, required_entity_id, required_alert_schedule_id, required_message_id):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'alert_schedule_id': filter_alert_schedule_id, 'alert_schedule_details_required[target_category]': required_target_category,'alert_schedule_details_required[entity_id]': required_entity_id,'alert_schedule_details_required[alert_schedule_id]': required_alert_schedule_id,'alert_schedule_details_required[message_id]': required_message_id}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
@@ -40,9 +40,9 @@ def unit_get_request(requestor_id, requestor_role, alert_schedule_id):
     return response
 
 
-@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert_schedule_id "{alert_schedule_id}"'), target_fixture = 'neg_get_request')
-def neg_get_request(requestor_id, requestor_role, alert_schedule_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'alert_schedule_id': alert_schedule_id}
+@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an alert schedule list  with details filter for "{filter_alert_schedule_id}" and requesting for alert schedule details for "{required_target_category}" "{required_entity_id}" "{required_alert_schedule_id}" and "{required_message_id}"'), target_fixture = 'neg_get_request')
+def neg_get_request(requestor_id, requestor_role,filter_alert_schedule_id, required_target_category, required_entity_id, required_alert_schedule_id, required_message_id):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'alert_schedule_filter[alert_schedule_id]': filter_alert_schedule_id, 'alert_schedule_details_required[target_category]': required_target_category,'alert_schedule_details_required[entity_id]': required_entity_id,'alert_schedule_details_required[alert_schedule_id]': required_alert_schedule_id,'alert_schedule_details_required[message_id]': required_message_id}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
@@ -57,8 +57,8 @@ def get_request():
 
 
 
-@then(parsers.parse('the result should return following list of alert schedule with its details like "{event_id}" "{target_category}" "{message_id}" "{alert_datetime}"'))
-def unit_get_response_assert(unit_get_request, event_id, target_category, message_id, alert_datetime):
+@then(parsers.parse('the result should return following details of entity with its name "{entity_id}" "{target_category}" "{alert_schedule_id_id}" and "{message_id}"'))
+def unit_get_response_assert(unit_get_request, entity_id, target_category, alert_schedule_id,message_id):
     # A more comprehensive test would check 'RelatedTopics' for matching phrases
     assert_respone = []
     assert_response = unit_get_request.json()   

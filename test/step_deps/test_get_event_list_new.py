@@ -30,9 +30,9 @@ def smoke_get_request(requestor_id, requestor_role, event_id):
     return response
     #assert find_free_subscribers_response_code.status_code == code
 
-@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an event_id "{event_id}"'), target_fixture = 'unit_get_request')
-def unit_get_request(requestor_id, requestor_role, event_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'event_id': event_id}
+@given(parsers.parse('the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an event_id "{event_id}" with details filter for "{filter_event_id}" and requesting for event details for "{required_category}" "{required_host_entity_id}" "{required_name}" and "{required_venue}"'), target_fixture = 'unit_get_request')
+def unit_get_request(requestor_id, requestor_role, event_id, filter_event_id, required_category, required_host_entity_id, required_name, required_venue):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'event_id': event_id, 'event_filter[event_id]': filter_event_id, 'event_details_required[category]': required_category,'event_details_required[host_entity_id]': required_host_entity_id,'event_details_required[name]': required_name,'event_details_required[venue]': required_venue}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
@@ -40,9 +40,9 @@ def unit_get_request(requestor_id, requestor_role, event_id):
     return response
 
 
-@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an event_id "{event_id}"'), target_fixture = 'neg_get_request')
-def neg_get_request(requestor_id,requestor_role,event_id):
-    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'event_id': event_id}
+@given(parsers.parse('the invalid inputs for the requestor Id is "{requestor_id}" with role as "{requestor_role}" for an event_id "{event_id}" with details filter for "{filter_event_id}" and requesting for event details for "{required_category}" "{required_host_entity_id}" "{required_name}" and "{required_venue}"'), target_fixture = 'neg_get_request')
+def neg_get_request(requestor_id, requestor_role, event_id, filter_event_id, required_category, required_host_entity_id, required_name, required_venue):
+    params = {'requestor_id': requestor_id, 'requestor_role': requestor_role,'event_id': event_id, 'event_filter[event_id]': filter_event_id, 'event_details_required[category]': required_category,'event_details_required[host_entity_id]': required_host_entity_id,'event_details_required[name]': required_name,'event_details_required[venue]': required_venue}
     response = requests.get(API_HOME, params = params) 
     print(response.url)
     status_code = response.json()  
@@ -57,8 +57,8 @@ def get_request():
 
 
 
-@then(parsers.parse('the result should return following details of event with its name "{name}" "{category}" "{host_entity_id}" for a period "{From}" till "{To}" for a venue in "{street}" "{building}" "{area}" with "{lat}" "{long}"'))
-def unit_get_response_assert(unit_get_request, name, category, host_entity_id, From, To, street, building, area, lat, long):
+@then(parsers.parse('the result should return following details of entity with its name "{name}" "{category}" "{event_id}" "{host_entity_id}" and "{venue}"'))
+def unit_get_response_assert(unit_get_request, name, category, event_id,host_entity_id, venue):
     # A more comprehensive test would check 'RelatedTopics' for matching phrases
     assert_respone = []
     assert_response = unit_get_request.json()   
