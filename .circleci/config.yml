@@ -27,12 +27,10 @@ jobs:
       - run:
           name: Testing Scheduler BB API 
           command: 'echo testing using conatainers' 
-      - run:
-          name: Check Status of Testing Containers are Deployed 
-          command: curl -X GET http://myapi:3000/event/list_details
+      
       - run:
           name: Run cucumber tests against Register BB Mock 
-          command: docker  exec -i pytest  pytest  -s --json-report --json-report-indent=4 --json-report-file=/home/circleci/test_result/smoke_testing_report.json
+          command: docker  exec -i pytest  curl -X GET http://myapi:3000/event/list_details
                 
       - store_test_results:  
           path: ../test_result
