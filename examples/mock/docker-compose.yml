@@ -18,11 +18,11 @@ services:
    container_name: pytest
    volumes:
       - type: bind
-        source: ./tests
-        target: /tests
+        source: ../../test
+        target: ../../tests
       - type: bind
-        source: ./test-results
-        target: /test-results
+        source: ../../test-results
+        target: ../../test-results
    tty: true
    stdin_open: true
    networks:
