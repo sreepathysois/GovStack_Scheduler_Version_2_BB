@@ -2,7 +2,7 @@ version: "3"
 services:
   mockoon:
     image: mockoon/cli:latest
-    command: mockoon-cli start  --data data # this is where the change takes place
+    command: -d /data # this is where the change takes place
     container_name: myapi
     ports:
       - "3000:3000"
