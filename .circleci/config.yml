@@ -34,16 +34,16 @@ jobs:
           
       - run:
           name: Create test-results directory
-          command: mkdir test-results
+          command: mkdir /home/circleci/project/test-results
       - run:
           name: Run cucumber tests against Register BB Mock 
-          command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=test-results/smoke_testing_report.json
+          command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/home/circleci/project/test-results/smoke_testing_report.json
                 
       - store_test_results:
-          path: test-results
-          destination: test-results
+          path: /home/circleci/project/test-results
+          destination: /home/circleci/project/test-results
       -  store_artifacts:
-          path: test-results 
+          path: /home/circleci/project/test-results 
     
 workflows:  
   deployment-and-api-tests:    
