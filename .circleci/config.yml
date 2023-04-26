@@ -25,6 +25,9 @@ jobs:
           name: Run Pytest tests against Register BB Mock
           command: docker exec -i pytest pytest -k smoke -s --junit-xml=/tmp/test-results/pytest-results.xml
       - run:
+          name: Run cucumber tests against Register BB Mock 
+          command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/test-results/smoke_testing_report.json
+      - run:
           name: Copy test results to host machine
           command: docker cp pytest:/tmp/test-results /tmp
       - store_test_results:
