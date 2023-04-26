@@ -32,7 +32,8 @@ jobs:
           command: docker cp pytest:/tmp/test-results /tmp
       - store_test_results:
           path: /tmp/test-results
-          prefix: junit-xml
+          prefix: junit-
+          destination: /test-results/
       - store_artifacts:
           path: /tmp/test-results
 
