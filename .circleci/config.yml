@@ -35,10 +35,11 @@ jobs:
           name: Run cucumber tests against Register BB Mock 
           command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/test-results/smoke_testing_report.json
                 
-      - store_artifacts:
-          path: test-results/
+      - store_test_results:
+          path: /test-results
           destination: test-results
-
+      -  store_artifacts:
+          path: test-results 
     
 workflows:  
   deployment-and-api-tests:    
