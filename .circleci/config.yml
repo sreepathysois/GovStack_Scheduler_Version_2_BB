@@ -5,7 +5,7 @@ jobs:
   deployment-and-api-tests:    
     build: # name of your job
     machine: # executor type
-      image: ubuntu-20.04
+      image: ubuntu-2004:202010-01
     steps:   
       - checkout  
       - run:
