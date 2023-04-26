@@ -22,10 +22,10 @@ jobs:
           name: Check Status of Testing Containers are Deployed
           command: docker ps
       - run:
-          name: Run Pytest tests against Register BB Mock
+          name: Run Pytest tests against Register BB Mock to generate test result in Junit XML Format for Test Summary
           command: docker exec -i pytest pytest -k smoke -s --junit-xml=/tmp/test-results/pytest-results.xml || true
       - run:
-          name: Run cucumber tests against Register BB Mock 
+          name: Run cucumber tests against Register BB Mock to generate test result in JSON Format
           command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/tmp/test-results/smoke_testing_report.json || true
       - run:
           name: Copy test results to host machine
