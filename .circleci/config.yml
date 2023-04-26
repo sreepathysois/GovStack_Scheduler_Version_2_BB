@@ -57,6 +57,4 @@ workflows:
             branches:
               only:
                 - main
-          post:
-            - store_test_results:
-                path: /home/circleci/project/test-results
+          
