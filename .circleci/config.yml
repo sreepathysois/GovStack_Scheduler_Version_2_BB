@@ -1,17 +1,14 @@
 version: 2.1
 
-
-jobs:  
-  deployment-and-api-tests:    
-    build: # name of your job
-    machine: # executor type
+jobs:
+  deployment-and-api-tests:
+    machine:
       image: ubuntu-2004:202010-01
-    steps:   
-      - checkout  
+    steps:
+      - checkout
       - run:
           name: 'Test Scheduler Build Block API'
-          command:
-            'echo testing all examples in /examples against test suite in /test'     
+          command: 'echo testing all examples in /examples against test suite in /test'
       - run:
           name: Deploy Mock APP for Scheduler BB API and PyTest Containers
           command: cd examples/mock && docker-compose up --build -d
@@ -19,42 +16,28 @@ jobs:
           name: Check Status of Mock App and API Testing Containers
           command: docker ps
       - run:
-          name: Testing Scheduler BB API 
-          command: 'echo testing using conatainers' 
+          name: Testing Scheduler BB API
+          command: 'echo testing using containers'
       - run:
-          name: Check Status of Testing Containers are Deployed 
+          name: Check Status of Testing Containers are Deployed
           command: docker ps
       - run:
-          name: Testing Scheduler BB API 
-          command: 'echo testing using conatainers' 
-      
-      - run:
-          name: Run cucumber tests against Register BB Mock 
-          command: docker  exec -i pytest  curl -X GET http://myapi:3000/event/list_details
-          
-      - run:
-          name: Create test-results directory
-          command: mkdir /home/circleci/project/test-results
-      - run:
-          name: Run cucumber tests against Register BB Mock 
-          command: docker  exec -i pytest  pytest -k smoke  -s --json-report --json-report-indent=4 --json-report-file=/test-results/smoke_testing_report.json --junitxml=/home/circleci/project/test-results/pytest-results.xml 
-                
+          name: Run Pytest tests against Register BB Mock
+          command: docker exec -i pytest pytest -k smoke -s --junit-xml=/tmp/test-results/pytest-results.xml
       - run:
           name: Copy test results to host machine
-          command: docker cp pytest:/test-results /tmp
+          command: docker cp pytest:/tmp/test-results /tmp
       - store_test_results:
           path: /tmp/test-results
-          prefix: test-results
-          
+          prefix: junit-xml
       - store_artifacts:
           path: /tmp/test-results
 
-workflows:  
-  deployment-and-api-tests:    
-    jobs:      
+workflows:
+  deployment-and-api-tests:
+    jobs:
       - deployment-and-api-tests:
-          filters:            
+          filters:
             branches:
               only:
                 - main
-          
