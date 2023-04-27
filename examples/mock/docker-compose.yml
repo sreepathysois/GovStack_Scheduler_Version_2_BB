@@ -17,12 +17,6 @@ services:
      context: ../../test/.
    container_name: pytest
    volumes:
-      - type: bind
-        source: ../../test
-        target: /test
-      - type: bind
-        source: ../../test/test-results
-        target: /test-results
    tty: true
    stdin_open: true
    networks:
