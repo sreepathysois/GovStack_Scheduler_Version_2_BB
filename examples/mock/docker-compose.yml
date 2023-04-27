@@ -16,7 +16,6 @@ services:
    build:
      context: ../../test/.
    container_name: pytest
-   volumes:
    tty: true
    stdin_open: true
    networks:
